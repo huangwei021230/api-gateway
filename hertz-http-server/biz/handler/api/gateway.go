@@ -4,25 +4,56 @@ package api
 
 import (
 	"context"
+	"github.com/huangwei021230/api-gateway/utils"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	api "github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/api"
+	additionService "github.com/huangwei021230/api-gateway/microservices/addition-service/kitex_gen/addition/management"
 )
 
 // AddNumbers .
 // @router /add [POST]
 func AddNumbers(ctx context.Context, c *app.RequestContext) {
+
+	// inital declarations (pre-generated)
 	var err error
 	var req api.AdditionRequest
+
+	// bind error params to req (pre-generated)
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
 
-	resp := new(api.AdditionResponse)
+	// create new client (with loadbalancing, service discovery capabilities) using utils.GenerateClient feature
+	additionClient, err := utils.GenerateClient("Addition")
+	if err != nil {
+		panic(err)
+	}
 
+	// binding req params to RPC reqest struct (following the request format declared in RPC service IDL)
+	reqRpc := &additionService.AdditionRequest{
+		FirstNum:  req.FirstNum,
+		SecondNum: req.SecondNum,
+	}
+
+	// initate new RPC response struct (as declared in RPC service IDL). This response variable will be populated by MakeRpcRequst function
+	var respRpc additionService.AdditionResponse
+
+	// calling MakeRpcRequest method declared in the utils package
+	err = utils.MakeRpcRequest(ctx, additionClient, "addNumbers", reqRpc, &respRpc)
+	if err != nil {
+		panic(err)
+	}
+
+	// initating and repackaging RPC response into new HTTP AdditionResponse
+	resp := &api.AdditionResponse{
+		Sum: respRpc.Sum,
+	}
+
+	// return to client as JSON HTTP response
 	c.JSON(consts.StatusOK, resp)
 }
 

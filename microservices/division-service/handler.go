@@ -3,9 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"strconv"
-
 	api "github.com/huangwei021230/api-gateway/microservices/division-service/kitex_gen/division/api"
+	"strconv"
 )
 
 // DivisionManagementImpl implements the last service interface defined in the IDL.
@@ -13,22 +12,19 @@ type DivisionManagementImpl struct{}
 
 // DivideNumbers implements the DivisionManagementImpl interface.
 func (s *DivisionManagementImpl) DivideNumbers(ctx context.Context, req *api.DivisionRequest) (resp *api.DivisionResponse, err error) {
-	// TODO: Your code here...
-	firstNumInt, err := strconv.Atoi(req.FirstNum)
+	firstNumFloat, err := strconv.ParseFloat(req.FirstNum, 64)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	secondNumInt, err := strconv.Atoi(req.SecondNum)
+	secondNumFloat, err := strconv.ParseFloat(req.SecondNum, 64)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	// add two numbers together
-	finalSum := firstNumInt / secondNumInt
+	finalQuotient := firstNumFloat / secondNumFloat
 
 	return &api.DivisionResponse{
-		Quotient: fmt.Sprintf("%d", finalSum),
+		Quotient: fmt.Sprintf("%.2f", finalQuotient),
 	}, nil
-
 }

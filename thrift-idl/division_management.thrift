@@ -10,5 +10,5 @@ struct DivisionResponse {
 }
 
 service DivisionManagement {
-    DivisionResponse divideNumbers(1: DivisionRequest req);
+    DivisionResponse divideNumbers(1: DivisionRequest req)(api.post = '/div');
 }

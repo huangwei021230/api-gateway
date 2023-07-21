@@ -13,22 +13,20 @@ type MultiplicationManagementImpl struct{}
 
 // MultiplyNumbers implements the MultiplicationManagementImpl interface.
 func (s *MultiplicationManagementImpl) MultiplyNumbers(ctx context.Context, req *management.MultiplicationRequest) (resp *management.MultiplicationResponse, err error) {
-	// TODO: Your code here...
-	firstNumInt, err := strconv.Atoi(req.FirstNum)
+	firstNum, err := strconv.Atoi(req.FirstNum)
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("invalid first number: %v", err)
 	}
 
-	secondNumInt, err := strconv.Atoi(req.SecondNum)
+	secondNum, err := strconv.Atoi(req.SecondNum)
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("invalid second number: %v", err)
 	}
 
-	// add two numbers together
-	finalSum := firstNumInt / secondNumInt
+	product := firstNum * secondNum
 
 	return &management.MultiplicationResponse{
-		Product: fmt.Sprintf("%d", finalSum),
+		Product: fmt.Sprintf("%d", product),
 	}, nil
 
 }

@@ -26,12 +26,16 @@ func GenerateClient(serviceName string) (genericclient.Client, error) {
 	}
 
 	// importing idl for reference(generic call)
+	// 本地文件 idl 解析
+	// YOUR_IDL_PATH thrift 文件路径: 举例 ./idl/example.thrift
+	// includeDirs: 指定 include 路径，默认用当前文件的相对路径寻找 include
 	p, err := generic.NewThriftFileProvider("../thrift-idl/gateway_api.thrift")
 	if err != nil {
 		panic(err)
 	}
 
 	// convert to thrift generic form
+	// 构造 JSON 请求和返回类型的泛化调用
 	g, err := generic.JSONThriftGeneric(p)
 	if err != nil {
 		panic(err)

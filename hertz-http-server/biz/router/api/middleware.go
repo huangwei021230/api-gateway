@@ -25,3 +25,8 @@ func _multiplynumbersMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _updateMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

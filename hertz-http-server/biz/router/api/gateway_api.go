@@ -20,4 +20,5 @@ func Register(r *server.Hertz) {
 	root.POST("/add", append(_addnumbersMw(), api.AddNumbers)...)
 	root.POST("/div", append(_dividenumbersMw(), api.DivideNumbers)...)
 	root.POST("/mul", append(_multiplynumbersMw(), api.MultiplyNumbers)...)
+	root.GET("/update", append(_updateMw(), api.Update)...)
 }

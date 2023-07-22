@@ -6,7 +6,9 @@ import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/cloudwego/kitex/pkg/generic"
 	addManagement "github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/addition/management"
+	"github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/api"
 	divManagement "github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/division/management"
 	mulManagement "github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/multiplication/management"
 	additionService "github.com/huangwei021230/api-gateway/microservices/addition-service/kitex_gen/addition/management"
@@ -139,5 +141,30 @@ func DivideNumbers(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// return to client as JSON HTTP response
+	c.JSON(consts.StatusOK, resp)
+}
+
+// Update .
+// @router /update [GET]
+func Update(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req api.UpdateReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+	p, err := generic.NewThriftContentProvider(req.GetIdl(), map[string]string{})
+	if err != nil {
+		panic("Error: fail to load the thrift file " + err.Error())
+	}
+	resp := new(api.UpdateResp)
+	err = p.UpdateIDL(req.GetIdl(), map[string]string{})
+	if err != nil {
+		panic("Error: fail to update idl " + err.Error())
+	}
+	resp.Success = true
+	resp.Message = "success"
+
 	c.JSON(consts.StatusOK, resp)
 }

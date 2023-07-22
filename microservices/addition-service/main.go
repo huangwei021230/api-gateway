@@ -23,7 +23,7 @@ func main() {
 		new(AdditionManagementImpl), // Follow AdditionManagementImpl as defined in ./handler.go
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "Addition"}), // allow service to be discovered with name: "Addition"
 		server.WithRegistry(r), // register service on etcd registry 'r' (as declared earlier)
-		server.WithServiceAddr(&net.TCPAddr{Port: 8890}),
+		server.WithServiceAddr(&net.TCPAddr{Port: 8892}),
 	)
 
 	// run server and handler any errors

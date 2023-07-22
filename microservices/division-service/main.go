@@ -20,7 +20,7 @@ func main() {
 		new(DivisionManagementImpl),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "Division"}),
 		server.WithRegistry(r),
-		server.WithServiceAddr(&net.TCPAddr{Port: 8890}),
+		server.WithServiceAddr(&net.TCPAddr{Port: 8891}),
 	)
 
 	// run server and handler any errors

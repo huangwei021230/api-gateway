@@ -10,6 +10,6 @@ struct AdditionResponse {
 }
 
 service AdditionManagement {
-    AdditionResponse addNumbers(1: AdditionRequest req);
+    AdditionResponse addNumbers(1: AdditionRequest req)(api.post = '/add');
 }
 

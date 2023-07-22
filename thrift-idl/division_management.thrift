@@ -1,4 +1,4 @@
-namespace go division.api
+namespace go division.management
 
 struct DivisionRequest {
     1: required string FirstNum;
@@ -10,5 +10,5 @@ struct DivisionResponse {
 }
 
 service DivisionManagement {
-    DivisionResponse divideNumbers(1: DivisionRequest req);
+    DivisionResponse divideNumbers(1: DivisionRequest req)(api.post = '/div');
 }

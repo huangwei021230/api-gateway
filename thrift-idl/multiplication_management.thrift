@@ -10,5 +10,5 @@ struct MultiplicationResponse {
 }
 
 service MultiplicationManagement {
-    MultiplicationResponse multiplyNumbers(1: MultiplicationRequest req);
+    MultiplicationResponse multiplyNumbers(1: MultiplicationRequest req)(api.post = '/mul');
 }

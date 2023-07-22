@@ -1,35 +1,11 @@
 namespace go api
 
-struct AdditionRequest {
-    1: required string FirstNum (api.body="FirstNum");
-    2: required string SecondNum (api.body="SecondNum")
-}
-
-struct AdditionResponse {
-    1: string Sum;
-}
-
-struct MultiplicationRequest {
-    1: required string FirstNum (api.body="FirstNum");
-    2: required string SecondNum (api.body="SecondNum")
-}
-
-struct MultiplicationResponse {
-    1: string Product;
-}
-
-struct DivisionRequest {
-    1: required string FirstNum (api.body="FirstNum");
-    2: required string SecondNum (api.body="SecondNum")
-}
-
-struct DivisionResponse {
-    1: string Quotient;
-}
-
+include "addition_management.thrift"
+include "multiplication_management.thrift"
+include "division_management.thrift"
 
 service Gateway {
-   AdditionResponse addNumbers(1: AdditionRequest req) (api.post="/add");
-   MultiplicationResponse multiplyNumbers(1: MultiplicationRequest req) (api.post="/multiply");
-   DivisionResponse divideNumbers(1: DivisionRequest req) (api.post="/divide");
+   addition_management.AdditionResponse addNumbers(1: addition_management.AdditionRequest req) (api.post="/add");
+   multiplication_management.MultiplicationResponse multiplyNumbers(1: multiplication_management.MultiplicationRequest req) (api.post="/mul");
+   division_management.DivisionResponse divideNumbers(1: division_management.DivisionRequest req) (api.post="/div");
 }

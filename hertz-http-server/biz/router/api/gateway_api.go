@@ -18,6 +18,6 @@ func Register(r *server.Hertz) {
 
 	root := r.Group("/", rootMw()...)
 	root.POST("/add", append(_addnumbersMw(), api.AddNumbers)...)
-	root.POST("/divide", append(_dividenumbersMw(), api.DivideNumbers)...)
-	root.POST("/multiply", append(_multiplynumbersMw(), api.MultiplyNumbers)...)
+	root.POST("/div", append(_dividenumbersMw(), api.DivideNumbers)...)
+	root.POST("/mul", append(_multiplynumbersMw(), api.MultiplyNumbers)...)
 }

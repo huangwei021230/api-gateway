@@ -6,1019 +6,17 @@ import (
 	"context"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
+	"github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/addition/management"
+	management1 "github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/division/management"
+	management0 "github.com/huangwei021230/api-gateway/hertz-http-server/biz/model/multiplication/management"
 )
 
-type AdditionRequest struct {
-	FirstNum  string `thrift:"FirstNum,1,required" form:"FirstNum,required" json:"FirstNum,required"`
-	SecondNum string `thrift:"SecondNum,2,required" form:"SecondNum,required" json:"SecondNum,required"`
-}
-
-func NewAdditionRequest() *AdditionRequest {
-	return &AdditionRequest{}
-}
-
-func (p *AdditionRequest) GetFirstNum() (v string) {
-	return p.FirstNum
-}
-
-func (p *AdditionRequest) GetSecondNum() (v string) {
-	return p.SecondNum
-}
-
-var fieldIDToName_AdditionRequest = map[int16]string{
-	1: "FirstNum",
-	2: "SecondNum",
-}
-
-func (p *AdditionRequest) Read(iprot thrift.TProtocol) (err error) {
-
-	var fieldTypeId thrift.TType
-	var fieldId int16
-	var issetFirstNum bool = false
-	var issetSecondNum bool = false
-
-	if _, err = iprot.ReadStructBegin(); err != nil {
-		goto ReadStructBeginError
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
-		if err != nil {
-			goto ReadFieldBeginError
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetFirstNum = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetSecondNum = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		default:
-			if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		}
-
-		if err = iprot.ReadFieldEnd(); err != nil {
-			goto ReadFieldEndError
-		}
-	}
-	if err = iprot.ReadStructEnd(); err != nil {
-		goto ReadStructEndError
-	}
-
-	if !issetFirstNum {
-		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetSecondNum {
-		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-	return nil
-ReadStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
-ReadFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
-ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AdditionRequest[fieldId]), err)
-SkipFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
-
-ReadFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
-ReadStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-RequiredFieldNotSetError:
-	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_AdditionRequest[fieldId]))
-}
-
-func (p *AdditionRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.FirstNum = v
-	}
-	return nil
-}
-
-func (p *AdditionRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.SecondNum = v
-	}
-	return nil
-}
-
-func (p *AdditionRequest) Write(oprot thrift.TProtocol) (err error) {
-	var fieldId int16
-	if err = oprot.WriteStructBegin("AdditionRequest"); err != nil {
-		goto WriteStructBeginError
-	}
-	if p != nil {
-		if err = p.writeField1(oprot); err != nil {
-			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
-			goto WriteFieldError
-		}
-
-	}
-	if err = oprot.WriteFieldStop(); err != nil {
-		goto WriteFieldStopError
-	}
-	if err = oprot.WriteStructEnd(); err != nil {
-		goto WriteStructEndError
-	}
-	return nil
-WriteStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-WriteFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
-WriteFieldStopError:
-	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
-WriteStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
-}
-
-func (p *AdditionRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("FirstNum", thrift.STRING, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.FirstNum); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *AdditionRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("SecondNum", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.SecondNum); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *AdditionRequest) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("AdditionRequest(%+v)", *p)
-}
-
-type AdditionResponse struct {
-	Sum string `thrift:"Sum,1" form:"Sum" json:"Sum" query:"Sum"`
-}
-
-func NewAdditionResponse() *AdditionResponse {
-	return &AdditionResponse{}
-}
-
-func (p *AdditionResponse) GetSum() (v string) {
-	return p.Sum
-}
-
-var fieldIDToName_AdditionResponse = map[int16]string{
-	1: "Sum",
-}
-
-func (p *AdditionResponse) Read(iprot thrift.TProtocol) (err error) {
-
-	var fieldTypeId thrift.TType
-	var fieldId int16
-
-	if _, err = iprot.ReadStructBegin(); err != nil {
-		goto ReadStructBeginError
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
-		if err != nil {
-			goto ReadFieldBeginError
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		default:
-			if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		}
-
-		if err = iprot.ReadFieldEnd(); err != nil {
-			goto ReadFieldEndError
-		}
-	}
-	if err = iprot.ReadStructEnd(); err != nil {
-		goto ReadStructEndError
-	}
-
-	return nil
-ReadStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
-ReadFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
-ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_AdditionResponse[fieldId]), err)
-SkipFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
-
-ReadFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
-ReadStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-}
-
-func (p *AdditionResponse) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Sum = v
-	}
-	return nil
-}
-
-func (p *AdditionResponse) Write(oprot thrift.TProtocol) (err error) {
-	var fieldId int16
-	if err = oprot.WriteStructBegin("AdditionResponse"); err != nil {
-		goto WriteStructBeginError
-	}
-	if p != nil {
-		if err = p.writeField1(oprot); err != nil {
-			fieldId = 1
-			goto WriteFieldError
-		}
-
-	}
-	if err = oprot.WriteFieldStop(); err != nil {
-		goto WriteFieldStopError
-	}
-	if err = oprot.WriteStructEnd(); err != nil {
-		goto WriteStructEndError
-	}
-	return nil
-WriteStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-WriteFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
-WriteFieldStopError:
-	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
-WriteStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
-}
-
-func (p *AdditionResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Sum", thrift.STRING, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Sum); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *AdditionResponse) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("AdditionResponse(%+v)", *p)
-}
-
-type MultiplicationRequest struct {
-	FirstNum  string `thrift:"FirstNum,1,required" form:"FirstNum,required" json:"FirstNum,required"`
-	SecondNum string `thrift:"SecondNum,2,required" form:"SecondNum,required" json:"SecondNum,required"`
-}
-
-func NewMultiplicationRequest() *MultiplicationRequest {
-	return &MultiplicationRequest{}
-}
-
-func (p *MultiplicationRequest) GetFirstNum() (v string) {
-	return p.FirstNum
-}
-
-func (p *MultiplicationRequest) GetSecondNum() (v string) {
-	return p.SecondNum
-}
-
-var fieldIDToName_MultiplicationRequest = map[int16]string{
-	1: "FirstNum",
-	2: "SecondNum",
-}
-
-func (p *MultiplicationRequest) Read(iprot thrift.TProtocol) (err error) {
-
-	var fieldTypeId thrift.TType
-	var fieldId int16
-	var issetFirstNum bool = false
-	var issetSecondNum bool = false
-
-	if _, err = iprot.ReadStructBegin(); err != nil {
-		goto ReadStructBeginError
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
-		if err != nil {
-			goto ReadFieldBeginError
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetFirstNum = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetSecondNum = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		default:
-			if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		}
-
-		if err = iprot.ReadFieldEnd(); err != nil {
-			goto ReadFieldEndError
-		}
-	}
-	if err = iprot.ReadStructEnd(); err != nil {
-		goto ReadStructEndError
-	}
-
-	if !issetFirstNum {
-		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetSecondNum {
-		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-	return nil
-ReadStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
-ReadFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
-ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MultiplicationRequest[fieldId]), err)
-SkipFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
-
-ReadFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
-ReadStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-RequiredFieldNotSetError:
-	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_MultiplicationRequest[fieldId]))
-}
-
-func (p *MultiplicationRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.FirstNum = v
-	}
-	return nil
-}
-
-func (p *MultiplicationRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.SecondNum = v
-	}
-	return nil
-}
-
-func (p *MultiplicationRequest) Write(oprot thrift.TProtocol) (err error) {
-	var fieldId int16
-	if err = oprot.WriteStructBegin("MultiplicationRequest"); err != nil {
-		goto WriteStructBeginError
-	}
-	if p != nil {
-		if err = p.writeField1(oprot); err != nil {
-			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
-			goto WriteFieldError
-		}
-
-	}
-	if err = oprot.WriteFieldStop(); err != nil {
-		goto WriteFieldStopError
-	}
-	if err = oprot.WriteStructEnd(); err != nil {
-		goto WriteStructEndError
-	}
-	return nil
-WriteStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-WriteFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
-WriteFieldStopError:
-	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
-WriteStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
-}
-
-func (p *MultiplicationRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("FirstNum", thrift.STRING, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.FirstNum); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *MultiplicationRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("SecondNum", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.SecondNum); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *MultiplicationRequest) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("MultiplicationRequest(%+v)", *p)
-}
-
-type MultiplicationResponse struct {
-	Product string `thrift:"Product,1" form:"Product" json:"Product" query:"Product"`
-}
-
-func NewMultiplicationResponse() *MultiplicationResponse {
-	return &MultiplicationResponse{}
-}
-
-func (p *MultiplicationResponse) GetProduct() (v string) {
-	return p.Product
-}
-
-var fieldIDToName_MultiplicationResponse = map[int16]string{
-	1: "Product",
-}
-
-func (p *MultiplicationResponse) Read(iprot thrift.TProtocol) (err error) {
-
-	var fieldTypeId thrift.TType
-	var fieldId int16
-
-	if _, err = iprot.ReadStructBegin(); err != nil {
-		goto ReadStructBeginError
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
-		if err != nil {
-			goto ReadFieldBeginError
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		default:
-			if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		}
-
-		if err = iprot.ReadFieldEnd(); err != nil {
-			goto ReadFieldEndError
-		}
-	}
-	if err = iprot.ReadStructEnd(); err != nil {
-		goto ReadStructEndError
-	}
-
-	return nil
-ReadStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
-ReadFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
-ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MultiplicationResponse[fieldId]), err)
-SkipFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
-
-ReadFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
-ReadStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-}
-
-func (p *MultiplicationResponse) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Product = v
-	}
-	return nil
-}
-
-func (p *MultiplicationResponse) Write(oprot thrift.TProtocol) (err error) {
-	var fieldId int16
-	if err = oprot.WriteStructBegin("MultiplicationResponse"); err != nil {
-		goto WriteStructBeginError
-	}
-	if p != nil {
-		if err = p.writeField1(oprot); err != nil {
-			fieldId = 1
-			goto WriteFieldError
-		}
-
-	}
-	if err = oprot.WriteFieldStop(); err != nil {
-		goto WriteFieldStopError
-	}
-	if err = oprot.WriteStructEnd(); err != nil {
-		goto WriteStructEndError
-	}
-	return nil
-WriteStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-WriteFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
-WriteFieldStopError:
-	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
-WriteStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
-}
-
-func (p *MultiplicationResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Product", thrift.STRING, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Product); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *MultiplicationResponse) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("MultiplicationResponse(%+v)", *p)
-}
-
-type DivisionRequest struct {
-	FirstNum  string `thrift:"FirstNum,1,required" form:"FirstNum,required" json:"FirstNum,required"`
-	SecondNum string `thrift:"SecondNum,2,required" form:"SecondNum,required" json:"SecondNum,required"`
-}
-
-func NewDivisionRequest() *DivisionRequest {
-	return &DivisionRequest{}
-}
-
-func (p *DivisionRequest) GetFirstNum() (v string) {
-	return p.FirstNum
-}
-
-func (p *DivisionRequest) GetSecondNum() (v string) {
-	return p.SecondNum
-}
-
-var fieldIDToName_DivisionRequest = map[int16]string{
-	1: "FirstNum",
-	2: "SecondNum",
-}
-
-func (p *DivisionRequest) Read(iprot thrift.TProtocol) (err error) {
-
-	var fieldTypeId thrift.TType
-	var fieldId int16
-	var issetFirstNum bool = false
-	var issetSecondNum bool = false
-
-	if _, err = iprot.ReadStructBegin(); err != nil {
-		goto ReadStructBeginError
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
-		if err != nil {
-			goto ReadFieldBeginError
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetFirstNum = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-				issetSecondNum = true
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		default:
-			if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		}
-
-		if err = iprot.ReadFieldEnd(); err != nil {
-			goto ReadFieldEndError
-		}
-	}
-	if err = iprot.ReadStructEnd(); err != nil {
-		goto ReadStructEndError
-	}
-
-	if !issetFirstNum {
-		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
-	if !issetSecondNum {
-		fieldId = 2
-		goto RequiredFieldNotSetError
-	}
-	return nil
-ReadStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
-ReadFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
-ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_DivisionRequest[fieldId]), err)
-SkipFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
-
-ReadFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
-ReadStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-RequiredFieldNotSetError:
-	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_DivisionRequest[fieldId]))
-}
-
-func (p *DivisionRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.FirstNum = v
-	}
-	return nil
-}
-
-func (p *DivisionRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.SecondNum = v
-	}
-	return nil
-}
-
-func (p *DivisionRequest) Write(oprot thrift.TProtocol) (err error) {
-	var fieldId int16
-	if err = oprot.WriteStructBegin("DivisionRequest"); err != nil {
-		goto WriteStructBeginError
-	}
-	if p != nil {
-		if err = p.writeField1(oprot); err != nil {
-			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
-			goto WriteFieldError
-		}
-
-	}
-	if err = oprot.WriteFieldStop(); err != nil {
-		goto WriteFieldStopError
-	}
-	if err = oprot.WriteStructEnd(); err != nil {
-		goto WriteStructEndError
-	}
-	return nil
-WriteStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-WriteFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
-WriteFieldStopError:
-	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
-WriteStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
-}
-
-func (p *DivisionRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("FirstNum", thrift.STRING, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.FirstNum); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DivisionRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("SecondNum", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.SecondNum); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *DivisionRequest) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("DivisionRequest(%+v)", *p)
-}
-
-type DivisionResponse struct {
-	Quotient string `thrift:"Quotient,1" form:"Quotient" json:"Quotient" query:"Quotient"`
-}
-
-func NewDivisionResponse() *DivisionResponse {
-	return &DivisionResponse{}
-}
-
-func (p *DivisionResponse) GetQuotient() (v string) {
-	return p.Quotient
-}
-
-var fieldIDToName_DivisionResponse = map[int16]string{
-	1: "Quotient",
-}
-
-func (p *DivisionResponse) Read(iprot thrift.TProtocol) (err error) {
-
-	var fieldTypeId thrift.TType
-	var fieldId int16
-
-	if _, err = iprot.ReadStructBegin(); err != nil {
-		goto ReadStructBeginError
-	}
-
-	for {
-		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
-		if err != nil {
-			goto ReadFieldBeginError
-		}
-		if fieldTypeId == thrift.STOP {
-			break
-		}
-
-		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		default:
-			if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		}
-
-		if err = iprot.ReadFieldEnd(); err != nil {
-			goto ReadFieldEndError
-		}
-	}
-	if err = iprot.ReadStructEnd(); err != nil {
-		goto ReadStructEndError
-	}
-
-	return nil
-ReadStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
-ReadFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
-ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_DivisionResponse[fieldId]), err)
-SkipFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
-
-ReadFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
-ReadStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
-}
-
-func (p *DivisionResponse) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.Quotient = v
-	}
-	return nil
-}
-
-func (p *DivisionResponse) Write(oprot thrift.TProtocol) (err error) {
-	var fieldId int16
-	if err = oprot.WriteStructBegin("DivisionResponse"); err != nil {
-		goto WriteStructBeginError
-	}
-	if p != nil {
-		if err = p.writeField1(oprot); err != nil {
-			fieldId = 1
-			goto WriteFieldError
-		}
-
-	}
-	if err = oprot.WriteFieldStop(); err != nil {
-		goto WriteFieldStopError
-	}
-	if err = oprot.WriteStructEnd(); err != nil {
-		goto WriteStructEndError
-	}
-	return nil
-WriteStructBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
-WriteFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
-WriteFieldStopError:
-	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
-WriteStructEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
-}
-
-func (p *DivisionResponse) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Quotient", thrift.STRING, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Quotient); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DivisionResponse) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("DivisionResponse(%+v)", *p)
-}
-
 type Gateway interface {
-	AddNumbers(ctx context.Context, req *AdditionRequest) (r *AdditionResponse, err error)
+	AddNumbers(ctx context.Context, req *management.AdditionRequest) (r *management.AdditionResponse, err error)
 
-	MultiplyNumbers(ctx context.Context, req *MultiplicationRequest) (r *MultiplicationResponse, err error)
+	MultiplyNumbers(ctx context.Context, req *management0.MultiplicationRequest) (r *management0.MultiplicationResponse, err error)
 
-	DivideNumbers(ctx context.Context, req *DivisionRequest) (r *DivisionResponse, err error)
+	DivideNumbers(ctx context.Context, req *management1.DivisionRequest) (r *management1.DivisionResponse, err error)
 }
 
 type GatewayClient struct {
@@ -1047,7 +45,7 @@ func (p *GatewayClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *GatewayClient) AddNumbers(ctx context.Context, req *AdditionRequest) (r *AdditionResponse, err error) {
+func (p *GatewayClient) AddNumbers(ctx context.Context, req *management.AdditionRequest) (r *management.AdditionResponse, err error) {
 	var _args GatewayAddNumbersArgs
 	_args.Req = req
 	var _result GatewayAddNumbersResult
@@ -1056,7 +54,7 @@ func (p *GatewayClient) AddNumbers(ctx context.Context, req *AdditionRequest) (r
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *GatewayClient) MultiplyNumbers(ctx context.Context, req *MultiplicationRequest) (r *MultiplicationResponse, err error) {
+func (p *GatewayClient) MultiplyNumbers(ctx context.Context, req *management0.MultiplicationRequest) (r *management0.MultiplicationResponse, err error) {
 	var _args GatewayMultiplyNumbersArgs
 	_args.Req = req
 	var _result GatewayMultiplyNumbersResult
@@ -1065,7 +63,7 @@ func (p *GatewayClient) MultiplyNumbers(ctx context.Context, req *Multiplication
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *GatewayClient) DivideNumbers(ctx context.Context, req *DivisionRequest) (r *DivisionResponse, err error) {
+func (p *GatewayClient) DivideNumbers(ctx context.Context, req *management1.DivisionRequest) (r *management1.DivisionResponse, err error) {
 	var _args GatewayDivideNumbersArgs
 	_args.Req = req
 	var _result GatewayDivideNumbersResult
@@ -1137,7 +135,7 @@ func (p *gatewayProcessorAddNumbers) Process(ctx context.Context, seqId int32, i
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := GatewayAddNumbersResult{}
-	var retval *AdditionResponse
+	var retval *management.AdditionResponse
 	if retval, err2 = p.handler.AddNumbers(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing addNumbers: "+err2.Error())
 		oprot.WriteMessageBegin("addNumbers", thrift.EXCEPTION, seqId)
@@ -1185,7 +183,7 @@ func (p *gatewayProcessorMultiplyNumbers) Process(ctx context.Context, seqId int
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := GatewayMultiplyNumbersResult{}
-	var retval *MultiplicationResponse
+	var retval *management0.MultiplicationResponse
 	if retval, err2 = p.handler.MultiplyNumbers(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing multiplyNumbers: "+err2.Error())
 		oprot.WriteMessageBegin("multiplyNumbers", thrift.EXCEPTION, seqId)
@@ -1233,7 +231,7 @@ func (p *gatewayProcessorDivideNumbers) Process(ctx context.Context, seqId int32
 	iprot.ReadMessageEnd()
 	var err2 error
 	result := GatewayDivideNumbersResult{}
-	var retval *DivisionResponse
+	var retval *management1.DivisionResponse
 	if retval, err2 = p.handler.DivideNumbers(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing divideNumbers: "+err2.Error())
 		oprot.WriteMessageBegin("divideNumbers", thrift.EXCEPTION, seqId)
@@ -1263,16 +261,16 @@ func (p *gatewayProcessorDivideNumbers) Process(ctx context.Context, seqId int32
 }
 
 type GatewayAddNumbersArgs struct {
-	Req *AdditionRequest `thrift:"req,1"`
+	Req *management.AdditionRequest `thrift:"req,1"`
 }
 
 func NewGatewayAddNumbersArgs() *GatewayAddNumbersArgs {
 	return &GatewayAddNumbersArgs{}
 }
 
-var GatewayAddNumbersArgs_Req_DEFAULT *AdditionRequest
+var GatewayAddNumbersArgs_Req_DEFAULT *management.AdditionRequest
 
-func (p *GatewayAddNumbersArgs) GetReq() (v *AdditionRequest) {
+func (p *GatewayAddNumbersArgs) GetReq() (v *management.AdditionRequest) {
 	if !p.IsSetReq() {
 		return GatewayAddNumbersArgs_Req_DEFAULT
 	}
@@ -1347,7 +345,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayAddNumbersArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = NewAdditionRequest()
+	p.Req = management.NewAdditionRequest()
 	if err := p.Req.Read(iprot); err != nil {
 		return err
 	}
@@ -1408,16 +406,16 @@ func (p *GatewayAddNumbersArgs) String() string {
 }
 
 type GatewayAddNumbersResult struct {
-	Success *AdditionResponse `thrift:"success,0,optional"`
+	Success *management.AdditionResponse `thrift:"success,0,optional"`
 }
 
 func NewGatewayAddNumbersResult() *GatewayAddNumbersResult {
 	return &GatewayAddNumbersResult{}
 }
 
-var GatewayAddNumbersResult_Success_DEFAULT *AdditionResponse
+var GatewayAddNumbersResult_Success_DEFAULT *management.AdditionResponse
 
-func (p *GatewayAddNumbersResult) GetSuccess() (v *AdditionResponse) {
+func (p *GatewayAddNumbersResult) GetSuccess() (v *management.AdditionResponse) {
 	if !p.IsSetSuccess() {
 		return GatewayAddNumbersResult_Success_DEFAULT
 	}
@@ -1492,7 +490,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayAddNumbersResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = NewAdditionResponse()
+	p.Success = management.NewAdditionResponse()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
 	}
@@ -1555,16 +553,16 @@ func (p *GatewayAddNumbersResult) String() string {
 }
 
 type GatewayMultiplyNumbersArgs struct {
-	Req *MultiplicationRequest `thrift:"req,1"`
+	Req *management0.MultiplicationRequest `thrift:"req,1"`
 }
 
 func NewGatewayMultiplyNumbersArgs() *GatewayMultiplyNumbersArgs {
 	return &GatewayMultiplyNumbersArgs{}
 }
 
-var GatewayMultiplyNumbersArgs_Req_DEFAULT *MultiplicationRequest
+var GatewayMultiplyNumbersArgs_Req_DEFAULT *management0.MultiplicationRequest
 
-func (p *GatewayMultiplyNumbersArgs) GetReq() (v *MultiplicationRequest) {
+func (p *GatewayMultiplyNumbersArgs) GetReq() (v *management0.MultiplicationRequest) {
 	if !p.IsSetReq() {
 		return GatewayMultiplyNumbersArgs_Req_DEFAULT
 	}
@@ -1639,7 +637,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayMultiplyNumbersArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = NewMultiplicationRequest()
+	p.Req = management0.NewMultiplicationRequest()
 	if err := p.Req.Read(iprot); err != nil {
 		return err
 	}
@@ -1700,16 +698,16 @@ func (p *GatewayMultiplyNumbersArgs) String() string {
 }
 
 type GatewayMultiplyNumbersResult struct {
-	Success *MultiplicationResponse `thrift:"success,0,optional"`
+	Success *management0.MultiplicationResponse `thrift:"success,0,optional"`
 }
 
 func NewGatewayMultiplyNumbersResult() *GatewayMultiplyNumbersResult {
 	return &GatewayMultiplyNumbersResult{}
 }
 
-var GatewayMultiplyNumbersResult_Success_DEFAULT *MultiplicationResponse
+var GatewayMultiplyNumbersResult_Success_DEFAULT *management0.MultiplicationResponse
 
-func (p *GatewayMultiplyNumbersResult) GetSuccess() (v *MultiplicationResponse) {
+func (p *GatewayMultiplyNumbersResult) GetSuccess() (v *management0.MultiplicationResponse) {
 	if !p.IsSetSuccess() {
 		return GatewayMultiplyNumbersResult_Success_DEFAULT
 	}
@@ -1784,7 +782,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayMultiplyNumbersResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = NewMultiplicationResponse()
+	p.Success = management0.NewMultiplicationResponse()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
 	}
@@ -1847,16 +845,16 @@ func (p *GatewayMultiplyNumbersResult) String() string {
 }
 
 type GatewayDivideNumbersArgs struct {
-	Req *DivisionRequest `thrift:"req,1"`
+	Req *management1.DivisionRequest `thrift:"req,1"`
 }
 
 func NewGatewayDivideNumbersArgs() *GatewayDivideNumbersArgs {
 	return &GatewayDivideNumbersArgs{}
 }
 
-var GatewayDivideNumbersArgs_Req_DEFAULT *DivisionRequest
+var GatewayDivideNumbersArgs_Req_DEFAULT *management1.DivisionRequest
 
-func (p *GatewayDivideNumbersArgs) GetReq() (v *DivisionRequest) {
+func (p *GatewayDivideNumbersArgs) GetReq() (v *management1.DivisionRequest) {
 	if !p.IsSetReq() {
 		return GatewayDivideNumbersArgs_Req_DEFAULT
 	}
@@ -1931,7 +929,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayDivideNumbersArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Req = NewDivisionRequest()
+	p.Req = management1.NewDivisionRequest()
 	if err := p.Req.Read(iprot); err != nil {
 		return err
 	}
@@ -1992,16 +990,16 @@ func (p *GatewayDivideNumbersArgs) String() string {
 }
 
 type GatewayDivideNumbersResult struct {
-	Success *DivisionResponse `thrift:"success,0,optional"`
+	Success *management1.DivisionResponse `thrift:"success,0,optional"`
 }
 
 func NewGatewayDivideNumbersResult() *GatewayDivideNumbersResult {
 	return &GatewayDivideNumbersResult{}
 }
 
-var GatewayDivideNumbersResult_Success_DEFAULT *DivisionResponse
+var GatewayDivideNumbersResult_Success_DEFAULT *management1.DivisionResponse
 
-func (p *GatewayDivideNumbersResult) GetSuccess() (v *DivisionResponse) {
+func (p *GatewayDivideNumbersResult) GetSuccess() (v *management1.DivisionResponse) {
 	if !p.IsSetSuccess() {
 		return GatewayDivideNumbersResult_Success_DEFAULT
 	}
@@ -2076,7 +1074,7 @@ ReadStructEndError:
 }
 
 func (p *GatewayDivideNumbersResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = NewDivisionResponse()
+	p.Success = management1.NewDivisionResponse()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
 	}

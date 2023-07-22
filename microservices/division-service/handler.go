@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	api "github.com/huangwei021230/api-gateway/microservices/division-service/kitex_gen/division/api"
+	api "github.com/huangwei021230/api-gateway/microservices/division-service/kitex_gen/division/management"
 	"strconv"
 )
 

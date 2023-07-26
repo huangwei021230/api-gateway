@@ -18,7 +18,9 @@ func main() {
 
 	svr := management.NewServer(
 		new(DivisionManagementImpl),
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "Division"}),
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
+			ServiceName: "division-server",
+		}),
 		server.WithRegistry(r),
 		server.WithServiceAddr(&net.TCPAddr{Port: 8891}),
 	)

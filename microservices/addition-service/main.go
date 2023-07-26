@@ -18,10 +18,12 @@ func main() {
 
 	// create new Kitex server for Addition Service
 	svr := management.NewServer(
-		new(AdditionManagementImpl),                                                     // Follow AdditionManagementImpl as defined in ./handler.go
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "Addition"}), // allow service to be discovered with name: "Addition"
-		server.WithRegistry(r),                                                          // register service on etcd registry 'r' (as declared earlier)
+		new(AdditionManagementImpl), // Follow AdditionManagementImpl as defined in ./handler.go
+		server.WithRegistry(r),      // register service on etcd registry 'r' (as declared earlier)
 		server.WithServiceAddr(&net.TCPAddr{Port: 8892}),
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
+			ServiceName: "addition-server",
+		}),
 	)
 
 	// run server and handler any errors

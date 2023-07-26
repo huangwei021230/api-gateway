@@ -12,12 +12,12 @@ type DivisionManagementImpl struct{}
 
 // DivideNumbers implements the DivisionManagementImpl interface.
 func (s *DivisionManagementImpl) DivideNumbers(ctx context.Context, req *api.DivisionRequest) (resp *api.DivisionResponse, err error) {
-	firstNumFloat, err := strconv.ParseFloat(req.FirstNum, 64)
+	firstNumFloat, err := strconv.ParseFloat(req.FirstNum[2:len(req.FirstNum)-2], 64)
 	if err != nil {
 		return nil, err
 	}
 
-	secondNumFloat, err := strconv.ParseFloat(req.SecondNum, 64)
+	secondNumFloat, err := strconv.ParseFloat(req.SecondNum[2:len(req.SecondNum)-2], 64)
 	if err != nil {
 		return nil, err
 	}

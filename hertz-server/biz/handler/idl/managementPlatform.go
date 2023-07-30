@@ -72,7 +72,8 @@ func ListAllService() []*gateway.Service {
 	mapMutex.Lock() // Acquire lock
 	defer mapMutex.Unlock()
 	for _, service := range serviceMap {
-		services = append(services, &service)
+		s := service
+		services = append(services, &s)
 	}
 	return services
 }

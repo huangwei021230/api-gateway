@@ -15,13 +15,13 @@ type AdditionManagementImpl struct{}
 func (s *AdditionManagementImpl) AddNumbers(ctx context.Context, req *management.AdditionRequest) (resp *management.AdditionResponse, err error) {
 
 	// parse int from string of First Number
-	firstNumInt, err := strconv.Atoi(req.FirstNum)
+	firstNumInt, err := strconv.Atoi(req.FirstNum[2 : len(req.FirstNum)-2])
 	if err != nil {
 		panic(err)
 	}
 
 	// parse int from string of Second Number
-	secondNumInt, err := strconv.Atoi(req.SecondNum)
+	secondNumInt, err := strconv.Atoi(req.SecondNum[2 : len(req.SecondNum)-2])
 	if err != nil {
 		panic(err)
 	}

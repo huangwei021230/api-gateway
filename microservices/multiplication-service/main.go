@@ -18,7 +18,9 @@ func main() {
 
 	svr := management.NewServer(
 		new(MultiplicationManagementImpl),
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "Multiplication"}),
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
+			ServiceName: "multiplication-server",
+		}),
 		server.WithRegistry(r),
 		server.WithServiceAddr(&net.TCPAddr{Port: 8890}),
 	)
